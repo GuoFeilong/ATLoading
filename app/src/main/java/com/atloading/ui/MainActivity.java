@@ -5,14 +5,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.atloading.R;
+import com.atloading.customview.ATCircleDialog;
 import com.atloading.customview.ATWaterDialog;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ATCircleDialog atCircleDialog;
+    private ATWaterDialog atWaterDialog;
+    private boolean showCircleOrWater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,21 +26,38 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+        atWaterDialog = new ATWaterDialog.Builder(this, R.layout.dialog_water_loading)
+                .cancelable(true)
+                .outsideCancelable(false)
+                .loadingDesc("我擦,加载....")
+                .build();
+
+        atCircleDialog = new ATCircleDialog.Builder(this, R.layout.dialog_circle_loading)
+                .cancelable(true)
+                .outsideCancelable(false)
+                .build();
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                if (showCircleOrWater) {
+                    atCircleDialog.dismiss();
+                    atWaterDialog.show();
+                } else {
+                    atWaterDialog.dismiss();
+                    atCircleDialog.show();
+                }
+                showCircleOrWater = !showCircleOrWater;
+
+
             }
         });
 
-        ATWaterDialog atWaterDialog = new ATWaterDialog.Builder(this, R.layout.dialog_water_loading)
-                .cancelable(true)
-                .outsideCancelable(false)
-                .loadingDesc("我擦,加载....")
-                .build();
-        atWaterDialog.show();
     }
 
     @Override
