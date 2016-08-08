@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ATCircleDialog atCircleDialog;
     private ATWaterDialog atWaterDialog;
     private boolean showCircleOrWater;
+    private String snakeDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
         atWaterDialog = new ATWaterDialog.Builder(this, R.layout.dialog_water_loading)
                 .cancelable(true)
-                .outsideCancelable(false)
+                .outsideCancelable(true)
                 .loadingDesc("我擦,加载....")
                 .build();
 
         atCircleDialog = new ATCircleDialog.Builder(this, R.layout.dialog_circle_loading)
                 .cancelable(true)
-                .outsideCancelable(false)
+                .outsideCancelable(true)
                 .build();
 
 
@@ -43,18 +44,20 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 if (showCircleOrWater) {
                     atCircleDialog.dismiss();
                     atWaterDialog.show();
+                    snakeDesc = "显示-->>waterloading...";
                 } else {
                     atWaterDialog.dismiss();
                     atCircleDialog.show();
+                    snakeDesc = "显示-->>圆环loading...";
+
                 }
                 showCircleOrWater = !showCircleOrWater;
 
-
+                Snackbar.make(view, snakeDesc, Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 

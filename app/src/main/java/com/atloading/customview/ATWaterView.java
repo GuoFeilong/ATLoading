@@ -11,7 +11,6 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.atloading.R;
@@ -135,11 +134,11 @@ public class ATWaterView extends View {
         path.reset();
         bg.eraseColor(getResources().getColor(android.R.color.transparent));
         // 当控制点的x坐标大于或等于终点x坐标时更改标识值
-        if (controlX >= defW + 1 / 2 * defW) {
+        if (controlX >= defW) {
             isIncrease = false;
         }
         // 当控制点的x坐标小于或等于起点x坐标时更改标识值
-        else if (controlX <= -1 / 2 * defW) {
+        else if (controlX <= 0) {
             isIncrease = true;
         }
 
